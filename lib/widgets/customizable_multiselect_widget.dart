@@ -66,7 +66,7 @@ class _CustomizableMultiselectWidgetState
           hintMaxLines: widget.decoration.hintMaxLines,
         );
     return effectiveDecoration.copyWith(
-      errorText: effectiveDecoration.errorText ?? '',
+      errorText: effectiveDecoration.errorText,
       counterStyle: effectiveDecoration.errorStyle ??
           themeData.textTheme.caption!.copyWith(color: themeData.errorColor),
     );
@@ -102,7 +102,8 @@ class _CustomizableMultiselectWidgetState
                     (DataSource dataSource, int index) => (widget
                             .value![index]!.isNotEmpty)
                         ? Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            // padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.zero,
                             child: Column(
                               children: [
                                 (dataSource.options.title != null)
@@ -112,8 +113,10 @@ class _CustomizableMultiselectWidgetState
                                               child: dataSource.options.title!),
                                         ],
                                       )
-                                    : Divider(),
-                                SizedBox(height: 4),
+                                    : widget.value!.length > 1
+                                      ? Divider() : Container(),
+                                if (widget.value!.length > 1)
+                                  SizedBox(height: 4),
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
                                   child: Row(
@@ -135,7 +138,8 @@ class _CustomizableMultiselectWidgetState
                 ],
               )
             : Padding(
-                padding: EdgeInsets.only(left: 8, right: 8, top: 8),
+                // padding: EdgeInsets.only(left: 8, right: 8, top: 8),
+                padding: EdgeInsets.zero,
                 child: widget.customizableMultiselectWidgetOptions.hintText ??
                     Text('Please Select a value',
                         style: TextStyle(color: Colors.grey)),
